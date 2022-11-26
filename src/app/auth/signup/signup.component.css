@@ -1,0 +1,27 @@
+.main-div {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card {
+  width: 30%;
+  margin: auto;
+}
+
+h2 {
+  font-weight: bold;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+.already {
+  margin-top: 10px;
+}

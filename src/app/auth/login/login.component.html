@@ -1,0 +1,24 @@
+<div class="main-div">
+  <mat-card>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form (submit)="onLogin(loginForm)" #loginForm="ngForm" *ngIf="!isLoading">
+      <h2 align="center">Medical Messenger</h2>
+      <mat-form-field>
+        <input matInput type="email" name="email" ngModel placeholder="email" #emailInput="ngModel" required email>
+        <mat-error *ngIf="emailInput.invalid">Please Enter a valid email</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="password" name="password" ngModel matInput placeholder="password" #passwordInput="ngModel"
+          required />
+        <mat-error *ngIf="passwordInput.invalid">Please Enter a valid password</mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" *ngIf="!isLoading">Login</button>
+      <div class="already">
+        <p>
+          Dont have account?
+          <a routerLink="/auth/signup"> signup</a>
+        </p>
+      </div>
+    </form>
+  </mat-card>
+</div>

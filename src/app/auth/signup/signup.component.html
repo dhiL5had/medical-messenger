@@ -1,0 +1,36 @@
+<div class="main-div">
+  <mat-card>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form (submit)="onSignup(signupForm)" #signupForm="ngForm" *ngIf="!isLoading">
+      <h2 align="center">Medical Messenger</h2>
+      <mat-form-field>
+        <input type="text" name="name" ngModel matInput placeholder="name" #nameInput="ngModel" required />
+        <mat-error *ngIf="nameInput.invalid">Please Enter a name</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="email" name="email" ngModel placeholder="email" #emailInput="ngModel" required email>
+        <mat-error *ngIf="emailInput.invalid">Please Enter a valid email</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="password" name="password" ngModel matInput placeholder="password" #passwordInput="ngModel"
+          required />
+        <mat-error *ngIf="passwordInput.invalid">Please Enter a valid password</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select name="role" ngModel #roleInput="ngModel" required>
+          <mat-option [value]="''">Role</mat-option>
+          <mat-option [value]="'2'">Doctor</mat-option>
+          <mat-option [value]="'3'">User</mat-option>
+        </mat-select>
+        <mat-error *ngIf="roleInput.invalid">Please select a role</mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" *ngIf="!isLoading" align="center">Sign Up</button>
+      <div class="already">
+        <p>
+          Already have account?
+          <a routerLink="/auth/login"> login</a>
+        </p>
+      </div>
+    </form>
+  </mat-card>
+</div>
