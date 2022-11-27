@@ -1,0 +1,16 @@
+<mat-toolbar color="primary" *ngIf="userIsAuthenticated">
+  <span><a [routerLink]="[isDoctor ? '/doctor/dashboard': '/patient/dashboard']">Medical-Messenger</a></span>
+  <span class="spacer"></span>
+  <ul>
+    <li>
+      <a mat-button [routerLink]="[isDoctor ? '/doctor/dashboard': '/patient/dashboard']"
+        routerLinkActive="activebutton">Dashboard</a>
+    </li>
+    <li>
+      <a mat-button [routerLink]="[isDoctor ? '/doctor/chat': '/patient/chat']" routerLinkActive="activebutton">Chat</a>
+    </li>
+    <li>
+      <button mat-button (click)="onLogout()">Logout</button>
+    </li>
+  </ul>
+</mat-toolbar>

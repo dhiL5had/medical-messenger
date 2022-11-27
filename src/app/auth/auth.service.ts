@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { AuthData } from './auth-data.model';
 import { environment } from 'src/environments/environment';
 
-const API_URL = environment.baseUrl + '/user';
+const API_URL = environment.baseUrl ;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -14,7 +14,7 @@ export class AuthService {
   private token!: string | null;
   private tokenTimer!: NodeJS.Timer;
   private userId!: string | null;
-  private userRole!: string | null;
+  private userRole!: number | null;
   private authStatusListener = new Subject<boolean>();
 
   constructor(private htt: HttpClient, private router: Router) {}
@@ -31,15 +31,23 @@ export class AuthService {
     return this.userId;
   }
 
+  getUserRole() {
+    return this.userRole;
+  }
+
+  getIsDoctor() {
+    return this.userRole == 2 ? true : false;
+  }
+
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
   }
 
   createUser(name: string, email: string, password: string, role: number) {
-    const authData: any = { name, email, password, role };
-    return this.htt.post(API_URL + '/signup', authData).subscribe(
+    const authData: AuthData = { name, email, password, role };
+    return this.htt.post(API_URL + '/auth/signup', authData).subscribe(
       (response) => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/auth/login']);
       },
       (error) => {
         this.authStatusListener.next(false);
@@ -54,8 +62,8 @@ export class AuthService {
         token: string;
         expiresIn: number;
         userId: string;
-        userRole: string;
-      }>(API_URL + '/login', authData)
+        userRole: number;
+      }>(API_URL + '/auth/login', authData)
       .subscribe(
         (response) => {
           const { token, expiresIn } = response;
@@ -74,7 +82,11 @@ export class AuthService {
               this.userId,
               this.userRole
             );
-            this.router.navigate(['/']);
+            if (this.userRole == 3){
+              this.router.navigate(['/patient/dashboard']);
+            } else {
+              this.router.navigate(['/doctor/dashboard']);
+            }
           }
         },
         (error) => {
@@ -92,6 +104,7 @@ export class AuthService {
       this.token = authInfo.token;
       this.isAuthenticated = true;
       this.userId = authInfo.userId;
+      this.userRole = authInfo.userRole;
       this.setAuthTimer(expiresIn / 100);
       this.authStatusListener.next(true);
     }
@@ -117,7 +130,7 @@ export class AuthService {
     token: string,
     expirationDate: Date,
     userId: string,
-    userRole: string
+    userRole: any
   ) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());

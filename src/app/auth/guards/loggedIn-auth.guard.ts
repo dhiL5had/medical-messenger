@@ -2,17 +2,18 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { Observable } from "rxjs";
 
-import { AuthService } from "./auth.service";
+import { AuthService } from "../auth.service";
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class LoggedInAuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     const isAuth = this.authService.getIsAuth();
-    if (!isAuth) {
-      this.router.navigate(['/auth/login']);
+    const userRole = this.authService.getUserRole();
+    if (isAuth) {
+      this.router.navigate([userRole == 2 ? '/doctor/dashboard' : '/patient/dashboard']);
     } 
-    return isAuth;
+    return !isAuth;
   }
 
 }

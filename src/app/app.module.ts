@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from 'src/error-interceptor';
 import { ErrorComponent } from './components/error/error.component';
+import { HeaderComponent } from './components/header/header.component';
 import { AngularMaterialModule } from './angular-material.module';
 
 @NgModule({
   declarations: [
     // User Defined Components
     AppComponent,
+    HeaderComponent,
     ErrorComponent,
   ],
   imports: [

@@ -1,6 +1,0 @@
-{
-  "env": {
-    "MONGO_SECRET": "localhost:27017",
-    "JWT_SECRET": "LONG_secret_FOR_jwt_AUTHENTICATION"
-  }
-}

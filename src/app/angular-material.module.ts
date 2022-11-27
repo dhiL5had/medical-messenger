@@ -21,6 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatPaginatorModule,
     MatDialogModule,
     MatSelectModule,
+    MatToolbarModule,
   ],
 })
 export class AngularMaterialModule {}
