@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const authRoute = require("./routes/auth");
+const patientRoute = require("./routes/patient");
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -34,5 +35,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/auth", authRoute);
+app.use("/api/patient", patientRoute);
 
 module.exports = app;

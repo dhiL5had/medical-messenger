@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { PatientRoutingModule } from './patient-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AngularMaterialModule } from '../angular-material.module';
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   ],
   imports: [
     CommonModule,
+    AngularMaterialModule,
     PatientRoutingModule
   ]
 })

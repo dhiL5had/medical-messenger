@@ -1,1 +1,25 @@
-<p>patient dashboard works!</p>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>Appointments</mat-card-title>
+  </mat-card-header>
+
+  <button mat-raised-button *ngIf="appointments.length <= 0" (click)="addNewAppointment()">Create Appointment</button>
+
+  <mat-card class="app-card" *ngFor="let apps of appointments">
+    <mat-card-content>
+      <mat-card-subtitle>{{apps?.description}}</mat-card-subtitle>
+      <mat-card-subtitle>Dr: {{apps?.doctor}}</mat-card-subtitle>
+      <mat-card-subtitle>Date: {{apps?.date | date: 'dd-MM-YYYY'}}</mat-card-subtitle>
+      <mat-card-subtitle>Time: {{apps?.time}}</mat-card-subtitle>
+    </mat-card-content>
+    <mat-card-footer>
+      <mat-card-actions align="end">
+        <button mat-button [routerLink]="['/patient/chat']">
+          <mat-icon>chat</mat-icon>
+        </button>
+        <!-- <button mat-button (click)="confirmDialog()"><mat-icon>delete</mat-icon></button> -->
+      </mat-card-actions>
+    </mat-card-footer>
+  </mat-card>
+</mat-card>

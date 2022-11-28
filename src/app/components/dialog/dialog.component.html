@@ -1,0 +1,36 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<h2 mat-dialog-title>Create Appointment</h2>
+<div mat-dialog-content>
+  <form [formGroup]="appForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput rows="4" formControlName="description" placeholder="description"></textarea>
+      <mat-error *ngIf="appForm.get('description')?.invalid">Please enter a description</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="doctorId">
+        <mat-option value="">select doctor</mat-option>
+        <mat-option *ngFor="let doctor of doctorsList" [value]="doctor.id">{{ doctor.name }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="appForm.get('doctorId')?.invalid">Please select a doctor</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Choose a date</mat-label>
+      <input type="date" matInput [value]="minDate" formControlName="date">
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-error *ngIf="appForm.get('date')?.invalid">Please select a date</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>choose a time</mat-label>
+      <!-- <input type="date" matInput [value]="minDate" formControlName="date"> -->
+      <input [ngxTimepicker]="picker" matInput formControlName="time" placeholder="12 hrs">
+      <ngx-material-timepicker #picker></ngx-material-timepicker>
+      <mat-error *ngIf="appForm.get('time')?.invalid">Please select preferred time</mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-action [align]="'end'">
+  <button mat-raised-button color="warn" (click)="closeDialog()" mat-dialog-close>Close</button>
+  <button type="submit" style="margin-left: 15px; background-color: rgb(26, 179, 26);color: white;" mat-raised-button
+    color="success" (click)="createAppointment()">{{mode}}</button>
+</div>

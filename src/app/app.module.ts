@@ -11,6 +11,8 @@ import { ErrorInterceptor } from 'src/error-interceptor';
 import { ErrorComponent } from './components/error/error.component';
 import { HeaderComponent } from './components/header/header.component';
 import { AngularMaterialModule } from './angular-material.module';
+import { DialogComponent } from './components/dialog/dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,9 +20,11 @@ import { AngularMaterialModule } from './angular-material.module';
     AppComponent,
     HeaderComponent,
     ErrorComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,

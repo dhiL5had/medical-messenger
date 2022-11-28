@@ -10,3 +10,36 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background: #3f51b5;
 }
+
+@keyframes slide {
+  100% {
+    right: 0;
+  }
+}
+
+.dialog-side-panel {
+  position: fixed !important;
+  bottom: 0;
+  top: 0;
+  right: -100vw;
+  width: 100vw;
+  height: 100%;
+  animation: slide 0.1s forwards;
+  animation-delay: 0.1s;
+}
+
+.mat-dialog-container {
+  border-radius: 0;
+}
+
+.mat-tab-label-container {
+  height: 100vh;
+}
+
+.timepicker-overlay {
+  z-index: 10000000 !important;
+}
+
+.timepicker-backdrop-overlay {
+  z-index: 10000000 !important;
+}
