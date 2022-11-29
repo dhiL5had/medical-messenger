@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { DialogComponent } from 'src/app/components/dialog/dialog.component';
 import { AppointmentData } from '../appointment-data.model';
@@ -15,18 +16,22 @@ export class DashboardComponent implements OnInit {
   isLoading: boolean = false;
   userId: any;
 
-  constructor(private patientService: PatientService, private authService: AuthService, private dialog: MatDialog) { }
+  constructor(
+    private patientService: PatientService, 
+    private authService: AuthService, 
+    private dialog: MatDialog,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
     this.isLoading = true;
     setTimeout(() => {
       this.userId = this.authService.getUserId();
       this.patientService.getAppointment().subscribe(appointData => {
-        console.log(appointData);
         this.appointments = [...appointData.appointments];
         this.isLoading = false;
       });
-    }, 3000)
+    }, 500)
   }
 
   addNewAppointment() {
@@ -38,8 +43,12 @@ export class DashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
-      console.log(result);
+      this.ngOnInit();
     });
+  }
+
+  chat(roomId: string) {
+    this.router.navigateByUrl('/patient/chat', {state: { roomId }});
   }
 
 }

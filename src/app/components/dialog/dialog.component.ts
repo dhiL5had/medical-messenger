@@ -37,7 +37,7 @@ export class DialogComponent implements OnInit {
         this.doctorsList = resData.doctors;
         this.isLoading = false;
       })
-    }, 3000);
+    }, 500);
   }
 
   createForm(): void {

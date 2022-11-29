@@ -4,4 +4,5 @@ export interface AppointmentData {
   date: Date;
   time: string;
   doctor: string;
+  roomId: string;
 }

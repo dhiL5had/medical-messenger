@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { DoctorService } from '../doctor.service';
 import { PatientsData } from '../patients-data.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +20,7 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private doctorService: DoctorService) { }
+  constructor(private doctorService: DoctorService, private router: Router) { }
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -40,14 +41,14 @@ export class DashboardComponent implements OnInit {
       console.log(data);
       this.ngOnInit();
     },
-    err => {
+    (err:any) => {
       console.log(err);
     })
     this.isLoading = false;
   }
 
-  chat(patientId: string) {
-    console.log(patientId);
+  chat(roomId: string) {
+    this.router.navigateByUrl('/doctor/chat', {state: { roomId }});
   }
 
 }

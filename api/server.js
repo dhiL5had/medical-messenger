@@ -1,7 +1,6 @@
 const app = require("./app");
 const debug = require("debug")("node-angular");
 const http = require("http");
-const path = require("path");
 require('dotenv').config();
 
 const normalizePort = (val) => {
@@ -45,10 +44,27 @@ const onListening = () => {
   debug("Listening on " + bind);
 };
 
-const port = normalizePort(process.env.PORT || "3000");
+const port = normalizePort(process.env.PORT || 3000);
 app.set("port", port);
 
 const server = http.createServer(app);
 server.on("error", onError);
 server.on("listening", onListening);
+
+const io = require('socket.io')(server, {
+  cors: "*"
+});
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  socket.on('message', (message) => {
+    io.emit('message', message);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('a user disconnected!');
+  });
+});
+
 server.listen(port);

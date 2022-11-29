@@ -3,11 +3,13 @@ const jwt = require('jsonwebtoken');
 const ObjectId = require('mongoose').Types.ObjectId;
 const User = require('../models/user');
 const Appointment = require('../models/appointment');
+const Room = require('../models/chatroom');
 const { default: mongoose } = require('mongoose');
 
 exports.getPatientsList = (req, res, next) => {
+  const doctorId = req.userData.userId;
   Appointment.aggregate([
-    { $match: { doctorId: ObjectId(req.userData.userId) }},
+    { $match: { doctorId: ObjectId(doctorId) }},
     {
       $lookup: {
         from: "users",
@@ -35,19 +37,19 @@ exports.getPatientsList = (req, res, next) => {
         pinned: 1
       }
     }
-  ]).then(patients => {
-    const uniqueIds = new Set();
+  ]).then(async patients => {
+    let uniqueIds = [];
     let filteredPatients = [];
-    patients.map(patient => {
-      const isDuplicate = uniqueIds.has(patient.patientId.toString().replace(/ObjectId\("(.*)"\)/, "$1"));
-      if(!isDuplicate) {
-        uniqueIds.add(patient.patientId.toString().replace(/ObjectId\("(.*)"\)/, "$1"));
-        filteredPatients.push(patient)
-        return;
-      }
+    const promises = patients.map(async patient => {
+      const patientId = `${patient.patientId.toString()}`;
+      const isDuplicate = uniqueIds.includes(patientId);
+      if(isDuplicate) return;
+      uniqueIds.push(patientId);
+      const room = await Room.findOne({doctorId: ObjectId(doctorId), patientId: ObjectId(patient.patientId)});
+      filteredPatients.push({...patient, roomId: room._id});
       return;
     });
-    console.log(filteredPatients);
+    const ps = await Promise.all(promises);
     res.status(200).json({message: "patients list", patients:filteredPatients})
   }).catch(err => {
     console.log(err);

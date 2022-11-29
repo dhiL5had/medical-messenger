@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const authRoute = require("./routes/auth");
 const patientRoute = require("./routes/patient");
 const doctorRoute = require("./routes/doctor");
+var chatRoute = require("./routes/chat");
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -37,6 +38,8 @@ app.use((req, res, next) => {
 
 app.use("/api/auth", authRoute);
 app.use("/api/patient", patientRoute);
-app.use("/api/doctor", doctorRoute)
+app.use("/api/doctor", doctorRoute);
+app.use("/api/chat", chatRoute);
+
 
 module.exports = app;

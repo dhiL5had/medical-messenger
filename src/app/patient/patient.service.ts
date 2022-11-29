@@ -27,6 +27,7 @@ export class PatientService {
             doctor: apps.doctor,
             date: apps.date,
             time: apps.time,
+            roomId: apps.roomId
           }
         })
       }
