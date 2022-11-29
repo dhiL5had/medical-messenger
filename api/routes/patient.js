@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const checkAuth = require('../middleware/auth');
+const checkAuth = require('../middleware/auth.patient');
 const {
   getDoctorsList,
   createAppointment,

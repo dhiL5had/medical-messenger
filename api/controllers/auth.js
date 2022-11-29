@@ -42,7 +42,7 @@ exports.userLogin = (req, res, next) => {
       });
     }
     const token = jwt.sign(
-      { email: fetchedUser.email, userId: fetchedUser._id },
+      { email: fetchedUser.email, userId: fetchedUser._id, userRole: fetchedUser.role },
         process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );

@@ -24,7 +24,6 @@ exports.getDoctorsList = (req, res, next) => {
 }
 
 exports.getAppointment = (req, res, nex) => {
-  console.log(req.userData.userId);
   Appointment.aggregate([
     {
       $match: { patientId: ObjectId(req.userData.userId) },
@@ -55,7 +54,6 @@ exports.getAppointment = (req, res, nex) => {
       }
     }
   ]).then(data => {
-    console.log(data);
     res.status(200).json({ 
       message: "Appointment List",
       appointments: data 
@@ -89,7 +87,6 @@ exports.createAppointment = (req, res, nex) => {
 
 exports.updateAppointment = (req, res, nex) => {
   Appointment.findOne({ patientId: req.params.userId }).then(data => {
-    console.log(data);
     res.status(200).json({ data })
   });
 };
