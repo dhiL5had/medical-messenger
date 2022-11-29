@@ -30,14 +30,14 @@ export class DialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.minDate);
+    this.isLoading = true;
     this.createForm();
-    this.patientService.getDoctorsList().subscribe(resData => {
-      this.doctorsList = resData.doctors;
-    })
-    // console.log(this.appointmentData);
-    if(this.appointmentData){
-    }
+    setTimeout(() => {
+      this.patientService.getDoctorsList().subscribe(resData => {
+        this.doctorsList = resData.doctors;
+        this.isLoading = false;
+      })
+    }, 3000);
   }
 
   createForm(): void {

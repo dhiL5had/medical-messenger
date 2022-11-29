@@ -13,6 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon'
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   exports: [
@@ -30,6 +31,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     MatNativeDateModule,
     NgxMaterialTimepickerModule,
     MatIconModule,
+    MatTableModule,
+    MatPaginatorModule
   ]
 })
 export class AngularMaterialModule {}

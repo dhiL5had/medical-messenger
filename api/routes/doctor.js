@@ -8,6 +8,6 @@ const {
  } = require('../controllers/doctor');
 
 router.get("/patients", checkAuth, getPatientsList);
-router.get("/pinpatient/:patientId", checkAuth, pinPatient);
+router.get("/patients/:patientId", checkAuth, pinPatient);
 
 module.exports = router;

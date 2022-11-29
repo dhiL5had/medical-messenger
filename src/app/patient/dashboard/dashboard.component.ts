@@ -19,12 +19,14 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.userId = this.authService.getUserId();
-    this.patientService.getAppointment().subscribe(appointData => {
-      console.log(appointData);
-      this.appointments = [...appointData.appointments];
-      this.isLoading = false;
-    });
+    setTimeout(() => {
+      this.userId = this.authService.getUserId();
+      this.patientService.getAppointment().subscribe(appointData => {
+        console.log(appointData);
+        this.appointments = [...appointData.appointments];
+        this.isLoading = false;
+      });
+    }, 3000)
   }
 
   addNewAppointment() {

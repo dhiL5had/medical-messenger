@@ -1,1 +1,70 @@
-<p>doctor dashboard works!</p>
+<mat-card class="card" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</mat-card>
+<mat-card class="card" *ngIf="!isLoading">
+  <mat-card-header>
+    <mat-card-title>Patients</mat-card-title>
+  </mat-card-header>
+
+
+  <!-- <button mat-raised-button *ngIf="appointments.length <= 0" (click)="addNewAppointment()">Create Appointment</button>
+
+   <mat-card class="app-card" *ngFor="let apps of appointments"> -->
+  <mat-card-content>
+    <div class="mat-elevation-z8 .table-responsive" [hidden]="isLoading">
+      <table class="table" mat-table [dataSource]="dataSource">
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Id </th>
+          <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.patient}} </td>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="action1">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="warn" (click)="pinPatient(element.patientId)">
+              <mat-icon class="{{element.pinned ? '' : 'material-icons-outlined'}}">push_pin</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <!-- Actions Column -->
+        <ng-container matColumnDef="action2">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="chat(element.patientId)">
+              <mat-icon class="material-icons-outlined" style="background-color: rgb(26, 179, 26);color: white;">chat
+              </mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of customer list">
+      </mat-paginator>
+    </div>
+  </mat-card-content>
+  <!-- <mat-card-footer>
+      <mat-card-actions align="end">
+        <button mat-button [routerLink]="['/patient/chat']">
+          <mat-icon>chat</mat-icon>
+        </button>
+        <button mat-button (click)="confirmDialog()"><mat-icon>delete</mat-icon></button>
+  </mat-card-actions>
+  </mat-card-footer>
+</mat-card> -->
+</mat-card>

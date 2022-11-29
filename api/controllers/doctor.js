@@ -19,13 +19,18 @@ exports.getPatientsList = (req, res, next) => {
     {
       $addFields: {
         patient: "$Patient.name",
+        email: "$Patient.email",
+        pinned: "$Patient.pinned",
       }
     },
     { $unwind: "$patient" },
+    { $unwind: "$email" },
+    { $unwind: "$pinned" },
     {
       $project: {
         _id: 0,
         patient: 1,
+        email: 1,
         patientId: 1,
         pinned: 1
       }
@@ -42,6 +47,7 @@ exports.getPatientsList = (req, res, next) => {
       }
       return;
     });
+    console.log(filteredPatients);
     res.status(200).json({message: "patients list", patients:filteredPatients})
   }).catch(err => {
     console.log(err);
@@ -59,13 +65,13 @@ exports.pinPatient = async (req, res, next) => {
     patients.map(async patient => {
       await User.updateMany({ _id: patient.patientId}, { pinned: false });
     })
-    await User.updateOne({ _id: patientId }, { pinned: true });
-    session.commitTransaction();
   } catch (err) {
     console.log(err);
     await session.abortTransaction();
     res.status(500).json({message: "Pinning Failed"})
   } finally {
+    await User.updateOne({ _id: patientId }, { pinned: true });
+    session.commitTransaction();
     session.endSession();
     res.status(201).json({ message: "Patient pinned "});
   }
