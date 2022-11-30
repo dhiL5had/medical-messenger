@@ -31,6 +31,18 @@
           <td mat-cell *matCellDef="let element"> {{element.email}} </td>
         </ng-container>
 
+        <!-- Date Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef> Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.date | date: 'd MMM, y'}} </td>
+        </ng-container>
+
+        <!-- Time Column -->
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef> time </th>
+          <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+        </ng-container>
+
         <!-- Actions Column -->
         <ng-container matColumnDef="action1">
           <th mat-header-cell *matHeaderCellDef></th>
@@ -44,9 +56,8 @@
         <ng-container matColumnDef="action2">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let element">
-            <button mat-icon-button (click)="chat(element.roomId)">
-              <mat-icon class="material-icons-outlined" style="background-color: rgb(26, 179, 26);color: white;">chat
-              </mat-icon>
+            <button mat-icon-button (click)="chat(element.roomId, element.patient)">
+              <mat-icon class="material-icons-outlined" style="color: rgb(26, 179, 26);">chat</mat-icon>
             </button>
           </td>
         </ng-container>

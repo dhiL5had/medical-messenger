@@ -6,14 +6,20 @@ import { environment } from 'src/environments/environment';
 
 const API_URL = environment.baseUrl + '/chat';
 
+const token = localStorage.getItem('token');
 
 @Injectable({providedIn: 'root'})
 export class ChatService {
   public message$: BehaviorSubject<string> = new BehaviorSubject('');
   
-  socket = io('http://localhost:3333');
+  socket = io('http://localhost:3333', { auth: {token} });
   
   constructor(private http: HttpClient) {}
+
+  connect(roomInfo: any) {
+    this.socket.connect();
+    this.socket.emit('join', roomInfo);
+  }
 
   public sendMessage(message: string) {
     this.socket.emit('message', message);
@@ -28,6 +34,11 @@ export class ChatService {
   };
 
   getChatRoomInfo(roomId: string) {
-    return this.http.get<{message: string, chatinfo: any}>(API_URL + '/room/' + roomId);
+    return this.http.get<{message: string, chatInfo: any}>(API_URL + '/room/' + roomId);
+  }
+
+  disconnect() {
+    this.socket.removeListener('message');
+    this.socket.disconnect();
   }
 }

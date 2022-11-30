@@ -3,5 +3,7 @@ export interface PatientsData {
   pinned: boolean;
   patient: string;
   email: string;
+  date: Date;
+  time: string;
   roomId: string;
 }

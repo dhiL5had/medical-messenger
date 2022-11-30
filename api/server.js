@@ -54,16 +54,32 @@ server.on("listening", onListening);
 const io = require('socket.io')(server, {
   cors: "*"
 });
+const Message = require('./models/message');
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+  socket.on('join', (data)=> {
+    socket.join(data.roomId);
+  })
+  socket.on('message', (data) => {
+    const { message, roomId, senderId } = data;
+    const msg = new Message({
+      message,
+      roomId,
+      senderId
+    });
+    msg.save().then(response => {
+      io.sockets.in(roomId).emit('message', data);
+    }).catch(err => {
+      console.log(err);
+      console.log("Message upload failed");
+    });
 
-  socket.on('message', (message) => {
-    io.emit('message', message);
   });
-
   socket.on('disconnect', () => {
-    console.log('a user disconnected!');
+    socket.leave();
+    socket.removeAllListeners(["message"]);
+    console.log('a user left and disconnected!');
   });
 });
 

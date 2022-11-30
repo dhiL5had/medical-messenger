@@ -52,12 +52,10 @@ export class DialogComponent implements OnInit {
 
   createAppointment(){
     if (this.appForm.invalid) return this.appForm.markAllAsTouched();
-    // console.log(this.appForm.value);
     this.appForm.patchValue({date: moment(this.appForm.value.date).format('YYYY-MM-DD')})
     this.isLoading = true;
     if(this.mode == 'create') {
       this.patientService.addAppointment(this.appForm.value);
-      console.log(this.appForm.value);
     } else {
       this.patientService.updateAppointment(this.appForm.value);
     }

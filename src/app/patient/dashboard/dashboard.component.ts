@@ -47,8 +47,8 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  chat(roomId: string) {
-    this.router.navigateByUrl('/patient/chat', {state: { roomId }});
+  chat(roomId: string, doctor: string) {
+    this.router.navigateByUrl('/patient/chat', {state: { roomId, user: doctor }});
   }
 
 }

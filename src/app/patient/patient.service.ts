@@ -37,7 +37,6 @@ export class PatientService {
 addAppointment(data: any) {
   this.http.post(API_URL, data)
     .subscribe((resData) => {
-      console.log(resData);
       this.router.navigate(['/patient/dashboard']);
     });
   }
@@ -46,7 +45,6 @@ addAppointment(data: any) {
     this.http
       .patch(API_URL, data)
       .subscribe((response) => {
-        console.log(response);
         this.router.navigate(['/patient/dashboard']);
       });
   }

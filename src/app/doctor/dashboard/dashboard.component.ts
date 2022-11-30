@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
   patients: PatientsData[] = [];
   isLoading: boolean = false;
 
-  displayedColumns: string[] = ['id', 'name', 'email', 'action1', 'action2'];
+  displayedColumns: string[] = ['id', 'name', 'email','date', 'time', 'action1', 'action2'];
   dataSource!: MatTableDataSource<PatientsData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -38,7 +38,6 @@ export class DashboardComponent implements OnInit {
   pinPatient(patientId: string) {
     this.isLoading = true;
     this.doctorService.pinPatient(patientId).subscribe(data => {
-      console.log(data);
       this.ngOnInit();
     },
     (err:any) => {
@@ -47,8 +46,8 @@ export class DashboardComponent implements OnInit {
     this.isLoading = false;
   }
 
-  chat(roomId: string) {
-    this.router.navigateByUrl('/doctor/chat', {state: { roomId }});
+  chat(roomId: string, patient: string) {
+    this.router.navigateByUrl('/doctor/chat', {state: { roomId, user: patient  }});
   }
 
 }

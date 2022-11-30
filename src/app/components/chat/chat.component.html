@@ -1,27 +1,11 @@
-<!-- <div *ngFor="let message of messageList">
-  <li>
-    {{ message }}
-  </li>
-</div>
-
-<input [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()">
-<button (click)="sendMessage()">Send Message</button> -->
-
 <div class="content" role="main">
   <div class="container">
     <div class="messaging">
       <div class="inbox_msg">
         <div class="mesgs">
           <div class="msg_history" #msgHistory>
-            <li class="message" *ngFor="let message of messageList; let last = last;">
-              <!-- <div
-                *ngIf="
-                  message.user.id !== currentUser.me.id;
-                  then incoming_msg;
-                  else outgoing_msg
-                "
-              ></div> -->
-              <div *ngIf="message == '' then null else incoming_msg"></div>
+            <li class="message" *ngFor="let msg of messageList; let last = last;">
+              <div *ngIf="msg.senderId === roomInfo.senderId then outgoing_msg; else incoming_msg;"></div>
               <ng-template #incoming_msg>
                 <div class="incoming_msg">
                   <div class="incoming_msg_img">
@@ -29,7 +13,7 @@
                   </div>
                   <div class="received_msg">
                     <div class="received_withd_msg">
-                      <p>{{ message }} {{ last ? scrollToBottom() : ''}}</p>
+                      <p>{{ msg?.message }} {{ last ? scrollToBottom() : ''}}</p>
                     </div>
                   </div>
                 </div>
@@ -37,16 +21,16 @@
               <ng-template #outgoing_msg>
                 <div class="outgoing_msg">
                   <div class="sent_msg">
-                    <p>{{ message }} {{ last ? scrollToBottom() : ''}}</p>
+                    <p>{{ msg?.message }} {{ last ? scrollToBottom() : ''}}</p>
                   </div>
                 </div>
               </ng-template>
             </li>
           </div>
           <div class="type_msg">
-            <form class="input_msg_write" (ngSubmit)="sendMessage()">
-              <input type="text" class="write_msg" placeholder="Type a message" name="newMessage"
-                [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()" />
+            <form class="input_msg_write" (ngSubmit)="sendMessage();$event.stopPropagation();">
+              <input type="text" class="write_msg" placeholder="Type a message" name="newMessage" #newMsg
+                [(ngModel)]="newMessage" /> {{newMsg.focus()}}
               <button class="msg_send_btn" type="submit">
                 <mat-icon>send</mat-icon>
               </button>

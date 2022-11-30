@@ -34,6 +34,8 @@ exports.getPatientsList = (req, res, next) => {
         patient: 1,
         email: 1,
         patientId: 1,
+        date: 1,
+        time: 1,
         pinned: 1
       }
     }
